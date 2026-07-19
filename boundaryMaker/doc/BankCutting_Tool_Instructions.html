@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank Cutting Tool – Civil 3D User Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0e1117;
+    --surface:  #161b26;
+    --surface2: #1e2535;
+    --border:   #252d3d;
+    --accent:   #f5a623;
+    --blue:     #4a9eff;
+    --green:    #3dd68c;
+    --red:      #f25f5c;
+    --purple:   #b78bfa;
+    --text:     #dde1ea;
+    --muted:    #5c6a84;
+    --mono:     'JetBrains Mono', monospace;
+    --sans:     'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.7;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: radial-gradient(circle, rgba(245,166,35,0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 28px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero {
+    padding: 64px 0 44px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 52px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.3);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  .tag-dot {
+    width: 5px; height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-bottom: 12px;
+  }
+
+  h1 em { color: var(--accent); font-style: normal; }
+
+  .hero-sub {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+
+  .cmd-badge {
+    background: var(--accent);
+    color: #000;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 28px;
+    padding: 14px 28px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+    align-self: center;
+    white-space: nowrap;
+  }
+
+  section {
+    margin-bottom: 52px;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise 0.45s forwards;
+  }
+
+  section:nth-child(1){ animation-delay:.05s }
+  section:nth-child(2){ animation-delay:.12s }
+  section:nth-child(3){ animation-delay:.19s }
+  section:nth-child(4){ animation-delay:.26s }
+  section:nth-child(5){ animation-delay:.33s }
+  section:nth-child(6){ animation-delay:.40s }
+  section:nth-child(7){ animation-delay:.47s }
+
+  @keyframes rise { to { opacity:1; transform:translateY(0) } }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .sec-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    opacity: 0.55;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    position: relative;
+    padding-bottom: 10px;
+  }
+
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 28px; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  p { color: #8795aa; font-size: 14.5px; margin-bottom: 10px; }
+
+  /* Dialog mockup */
+  .dialog-preview {
+    background: #c0c0c0;
+    border: 2px solid #808080;
+    border-radius: 2px;
+    max-width: 560px;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 12px;
+    color: #000;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+    margin-top: 16px;
+  }
+
+  .dialog-titlebar {
+    background: linear-gradient(to right, #000080, #1084d0);
+    color: white;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dialog-close {
+    background: #c0c0c0;
+    border: 1px solid #808080;
+    color: #000;
+    width: 16px; height: 14px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dialog-body {
+    padding: 12px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dialog-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dlg-label { width: 120px; flex-shrink: 0; font-size: 11px; }
+
+  .dlg-input {
+    background: white;
+    border: 1px inset #808080;
+    padding: 2px 6px;
+    width: 72px;
+    font-size: 11px;
+    color: #333;
+  }
+
+  .dlg-btn {
+    background: #d4d0c8;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #404040;
+    border-bottom: 1px solid #404040;
+    padding: 3px 10px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .dlg-btn-row {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    padding-top: 4px;
+  }
+
+  /* Flow steps */
+  .flow { display: flex; flex-direction: column; gap: 3px; }
+
+  .flow-item {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color .2s, transform .15s;
+  }
+
+  .flow-item:hover { border-color: rgba(245,166,35,.35); transform: translateX(3px); }
+
+  .flow-n {
+    background: var(--surface2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--accent);
+  }
+
+  .flow-body { padding: 14px 18px; }
+  .flow-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 3px; }
+  .flow-desc { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+
+  /* Button grid */
+  .btn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .btn-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px;
+    border-radius: 3px;
+    transition: border-color .2s;
+  }
+
+  .btn-card:hover { border-color: rgba(245,166,35,.3); }
+
+  .btn-name {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .btn-desc { font-size: 13px; color: #8795aa; line-height: 1.5; margin: 0; }
+
+  .btn-when {
+    font-family: var(--mono);
+    font-size: 11px;
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  /* Tables */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    font-size: 13px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .data-table th {
+    background: #0a0e18;
+    padding: 11px 16px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    color: #8795aa;
+    vertical-align: middle;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,.02); }
+
+  .block-name { font-family: var(--mono); font-weight: 600; font-size: 12px; color: var(--blue); }
+  .dir-up { color: var(--green); font-weight: 700; font-family: var(--mono); }
+  .dir-dn { color: var(--red);   font-weight: 700; font-family: var(--mono); }
+  .lg-tag {
+    background: rgba(183,139,250,.12);
+    color: var(--purple);
+    border: 1px solid rgba(183,139,250,.25);
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+
+  /* Error table */
+  .err-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .err-table th {
+    background: #140a0c;
+    padding: 10px 16px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    border-bottom: 1px solid #2d1219;
+  }
+
+  .err-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    vertical-align: top;
+  }
+
+  .err-table tr:last-child td { border-bottom: none; }
+  .err-msg { font-family: var(--mono); font-size: 11.5px; color: #f08090; }
+  .err-fix { color: #8795aa; }
+
+  .note {
+    background: rgba(245,166,35,.05);
+    border: 1px solid rgba(245,166,35,.18);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 0 3px 3px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #c8a55a;
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+
+  .note strong { color: var(--accent); }
+
+  code {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 13px;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .sp { height: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="tag"><span class="tag-dot"></span>AutoLISP · Civil 3D · v4</div>
+      <h1>Bank <em>Cutting</em><br>Tool</h1>
+      <p class="hero-sub">User Guide &nbsp;·&nbsp; bank_cutting.lsp + bank_cutting.dcl</p>
+    </div>
+    <div class="cmd-badge">BC</div>
+  </div>
+
+  <!-- 01 OVERVIEW -->
+  <section>
+    <div class="sec-head"><span class="sec-num">01 —</span><h2>Overview</h2></div>
+    <p>The BC Tool is an AutoLISP utility for Civil 3D that inserts pre-defined bank cutting blocks with the correct Height (H) and Distance (D) values — picked directly from the drawing using a dialog interface.</p>
+    <p>It calculates height from two text labels, measures perpendicular distance to a polyline, and inserts the matching block variant in one click.</p>
+    <div class="sp"></div>
+
+    <div class="dialog-preview">
+      <div class="dialog-titlebar">BANK CUTTING <div class="dialog-close">✕</div></div>
+      <div class="dialog-body">
+        <div class="dialog-row">
+          <span class="dlg-label">HIGHT VALUE</span>
+          <input class="dlg-input" value="2.50" readonly>
+          <button class="dlg-btn">PICK HIGHT (BE or FT) - (TOE OR GL)</button>
+        </div>
+        <div class="dialog-row">
+          <span class="dlg-label">DISTRANCE VALUE</span>
+          <input class="dlg-input" value="4.80" readonly>
+          <button class="dlg-btn">PICK DISTRANCE (TOE OR GL) TO NEARBY TRACK</button>
+        </div>
+        <div class="dlg-btn-row">
+          <button class="dlg-btn">UP</button>
+          <button class="dlg-btn">DN</button>
+          <button class="dlg-btn">PICK ME</button>
+          <button class="dlg-btn">CLOSE</button>
+        </div>
+      </div>
+    </div>
+    <div class="note"><strong>Note:</strong> The dialog stays open after each insert — values clear automatically so you can place the next block immediately without re-running BC.</div>
+  </section>
+
+  <!-- 02 LOADING -->
+  <section>
+    <div class="sec-head"><span class="sec-num">02 —</span><h2>Loading the Tool</h2></div>
+    <div class="flow">
+      <div class="flow-item">
+        <div class="flow-n">1</div>
+        <div class="flow-body">
+          <div class="flow-title">Copy files to AutoCAD Support folder</div>
+          <div class="flow-desc">Place both bank_cutting.lsp and bank_cutting.dcl in the same AutoCAD Support path folder</div>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-n">2</div>
+        <div class="flow-body">
+          <div class="flow-title">Load the LSP file</div>
+          <div class="flow-desc">AutoCAD → APPLOAD → select bank_cutting.lsp → Load</div>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-n">3</div>
+        <div class="flow-body">
+          <div class="flow-title">Register the blocks (first time only)</div>
+          <div class="flow-desc">Insert all four block variants from Tool Palette at least once so they exist in the drawing definition</div>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-n">4</div>
+        <div class="flow-body">
+          <div class="flow-title">Run the command</div>
+          <div class="flow-desc">Type BC in the Command Bar and press Enter — the dialog opens</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 WORKFLOW -->
+  <section>
+    <div class="sec-head"><span class="sec-num">03 —</span><h2>Step-by-Step Workflow</h2></div>
+    <div class="flow">
+      <div class="flow-item">
+        <div class="flow-n">1</div>
+        <div class="flow-body">
+          <div class="flow-title">Pick Height — click "PICK HIGHT"</div>
+          <div class="flow-desc">Select First TEXT/MTEXT (BE or FT level) → then Second TEXT/MTEXT (TOE or GL level). Difference is auto-calculated as the H value.</div>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-n">2</div>
+        <div class="flow-body">
+          <div class="flow-title">Pick Distance — click "PICK DISTRANCE"</div>
+          <div class="flow-desc">Click the center point in the drawing → then select the nearby track Polyline or Line. Perpendicular distance is measured and set as D value.</div>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-n">3</div>
+        <div class="flow-body">
+          <div class="flow-title">Set Direction — click UP or DN</div>
+          <div class="flow-desc">Choose UP if the bank cutting is above the track, DN if below. This controls which block variant is inserted.</div>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-n">4</div>
+        <div class="flow-body">
+          <div class="flow-title">Insert — click "PICK ME"</div>
+          <div class="flow-desc">Click anywhere in the drawing — the block inserts at that point with H and D values written in. Values then clear automatically for the next block.</div>
+        </div>
+      </div>
+    </div>
+    <div class="note"><strong>H-LG case:</strong> If the second text value is higher than the first (negative height), H is set to "H-LG" automatically and the LG block variant is used. The D label is hidden in this case.</div>
+  </section>
+
+  <!-- 04 BUTTONS -->
+  <section>
+    <div class="sec-head"><span class="sec-num">04 —</span><h2>Dialog Buttons</h2></div>
+    <div class="btn-grid">
+      <div class="btn-card">
+        <div class="btn-name" style="background:rgba(74,158,255,.1);color:var(--blue)">PICK HIGHT</div>
+        <p class="btn-desc">Pick two TEXT or MTEXT objects. Calculates height difference (First − Second) and sets the H value. Enables distance and direction buttons.</p>
+        <span class="btn-when" style="background:rgba(74,158,255,.08);color:var(--blue)">Always first step</span>
+      </div>
+      <div class="btn-card">
+        <div class="btn-name" style="background:rgba(74,158,255,.1);color:var(--blue)">PICK DISTRANCE</div>
+        <p class="btn-desc">Click a center point, then select a Polyline or Line. Measures the closest perpendicular distance and sets the D value.</p>
+        <span class="btn-when" style="background:rgba(74,158,255,.08);color:var(--blue)">Enabled after Height is set</span>
+      </div>
+      <div class="btn-card">
+        <div class="btn-name" style="background:rgba(61,214,140,.1);color:var(--green)">UP</div>
+        <p class="btn-desc">Sets direction to UP. The tool will insert the bank_cutting_up or bank_cutting_up_lg block variant.</p>
+        <span class="btn-when" style="background:rgba(61,214,140,.08);color:var(--green)">Enabled after Height + Distance</span>
+      </div>
+      <div class="btn-card">
+        <div class="btn-name" style="background:rgba(242,95,92,.1);color:var(--red)">DN</div>
+        <p class="btn-desc">Sets direction to DN. The tool will insert the bank_cutting_dn or bank_cutting_dn_lg block variant.</p>
+        <span class="btn-when" style="background:rgba(242,95,92,.08);color:var(--red)">Enabled after Height + Distance</span>
+      </div>
+      <div class="btn-card">
+        <div class="btn-name" style="background:rgba(245,166,35,.1);color:var(--accent)">PICK ME</div>
+        <p class="btn-desc">Click any point in the drawing — block inserts there with H and D filled automatically. Values clear for the next block.</p>
+        <span class="btn-when" style="background:rgba(245,166,35,.08);color:var(--accent)">Enabled after direction is set</span>
+      </div>
+      <div class="btn-card">
+        <div class="btn-name" style="background:rgba(255,255,255,.05);color:var(--muted)">CLOSE</div>
+        <p class="btn-desc">Closes the Bank Cutting dialog and exits the BC command.</p>
+        <span class="btn-when" style="background:rgba(255,255,255,.04);color:var(--muted)">Available anytime</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 BLOCKS -->
+  <section>
+    <div class="sec-head"><span class="sec-num">05 —</span><h2>Block Variants</h2></div>
+    <table class="data-table">
+      <thead><tr><th>Block Name</th><th>Direction</th><th>H Value</th><th>D Label</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="block-name">bank_cutting_up</span></td>
+          <td><span class="dir-up">UP</span></td>
+          <td>Normal (e.g. H-2.50)</td>
+          <td>Shown (e.g. D-4.80)</td>
+        </tr>
+        <tr>
+          <td><span class="block-name">bank_cutting_dn</span></td>
+          <td><span class="dir-dn">DN</span></td>
+          <td>Normal (e.g. H-2.50)</td>
+          <td>Shown (e.g. D-4.80)</td>
+        </tr>
+        <tr>
+          <td><span class="block-name">bank_cutting_up_lg</span></td>
+          <td><span class="dir-up">UP</span></td>
+          <td><span class="lg-tag">H-LG</span></td>
+          <td>Hidden (deleted)</td>
+        </tr>
+        <tr>
+          <td><span class="block-name">bank_cutting_dn_lg</span></td>
+          <td><span class="dir-dn">DN</span></td>
+          <td><span class="lg-tag">H-LG</span></td>
+          <td>Hidden (deleted)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note"><strong>Important:</strong> All four blocks must exist in the drawing before running BC. Insert each from the Tool Palette once to register them. The tool alerts you if a required block is missing.</div>
+  </section>
+
+  <!-- 06 TROUBLESHOOTING -->
+  <section>
+    <div class="sec-head"><span class="sec-num">06 —</span><h2>Troubleshooting</h2></div>
+    <table class="err-table">
+      <thead><tr><th>Alert / Message</th><th>Solution</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="err-msg">DCL load failed!</span></td>
+          <td class="err-fix">Ensure bank_cutting.dcl is in the same folder as the .lsp and is in AutoCAD Support path</td>
+        </tr>
+        <tr>
+          <td><span class="err-msg">First entity TEXT or MTEXT ah irukkanum!</span></td>
+          <td class="err-fix">Select only TEXT or MTEXT objects when picking height — not lines or other entities</td>
+        </tr>
+        <tr>
+          <td><span class="err-msg">LWPOLYLINE, POLYLINE or LINE select pannunga!</span></td>
+          <td class="err-fix">When picking distance, the second pick must be a Polyline or Line object</td>
+        </tr>
+        <tr>
+          <td><span class="err-msg">'block_name' block drawing la illa!</span></td>
+          <td class="err-fix">Insert all four block variants from Tool Palette at least once before running BC</td>
+        </tr>
+        <tr>
+          <td><span class="err-msg">First Distance pick pannunga - polyline set aaganum!</span></td>
+          <td class="err-fix">Use PICK DISTRANCE first to set a polyline reference before clicking PICK ME</td>
+        </tr>
+        <tr>
+          <td><span class="err-msg">Block inserted but text not found</span></td>
+          <td class="err-fix">Block inserted but H-0.00 / D-0.00 placeholder text not found — verify the block definition has correct text content</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 07 QUICK REF -->
+  <section>
+    <div class="sec-head"><span class="sec-num">07 —</span><h2>Quick Reference</h2></div>
+    <table class="data-table">
+      <thead><tr><th>Action</th><th>Steps</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--text);font-weight:600">Run tool</td><td>Type <code>BC</code> → Enter</td></tr>
+        <tr><td style="color:var(--text);font-weight:600">Get height</td><td>PICK HIGHT → select BE/FT text → select TOE/GL text</td></tr>
+        <tr><td style="color:var(--text);font-weight:600">Get distance</td><td>PICK DISTRANCE → click center point → select track polyline</td></tr>
+        <tr><td style="color:var(--text);font-weight:600">Insert UP block</td><td>UP → PICK ME → click insert point</td></tr>
+        <tr><td style="color:var(--text);font-weight:600">Insert DN block</td><td>DN → PICK ME → click insert point</td></tr>
+        <tr><td style="color:var(--text);font-weight:600">H-LG case</td><td>Height auto-sets to LG when negative — set direction and PICK ME</td></tr>
+        <tr><td style="color:var(--text);font-weight:600">Next block</td><td>Values clear after each insert — repeat from step 1</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>Bank Cutting Tool · v4 · Civil 3D AutoLISP User Guide</footer>
+</div>
+</body>
+</html>
