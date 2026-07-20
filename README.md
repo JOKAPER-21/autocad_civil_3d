@@ -1,4 +1,4 @@
-# 👋 Hi, I'm Jokaper
+# 👋 Hi, I'm Jokaper, Rishi
 
 ## 🚀 About Me
 
