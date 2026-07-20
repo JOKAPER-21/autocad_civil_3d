@@ -1,86 +1,90 @@
-# 👋 Hi, I'm Jokaper, Rishi
+# 👋 Hi, We're Jokaper & Rishi
 
-## 🚀 About Me
+## 🚀 About Us
 
-I'm an **Automation Developer** focused on improving engineering workflows for **AutoCAD** and **AutoCAD Civil 3D**.
+We're **Automation Developers** passionate about improving engineering workflows for **AutoCAD** and **AutoCAD Civil 3D**.
 
-I build tools that reduce repetitive work, increase productivity, and simplify CAD-related tasks using multiple programming languages and scripting technologies.
-
----
-
-## 🛠️ Technologies I Use
-
-- AutoLISP
-- Python
-- HTML5
-- CSS3
-- JavaScript
-- Java
-- Batch Script
-- PowerShell
-- Git & GitHub
+Together, we develop tools that eliminate repetitive tasks, increase productivity, and simplify CAD-related workflows using multiple programming languages and automation technologies.
 
 ---
 
-## 💡 What I Build
+## 🛠️ Technologies We Use
 
-- AutoCAD automation tools
-- AutoCAD Civil 3D utilities
-- AutoLISP commands
-- HTML-based engineering tools
-- Chainage calculators
-- Geometry calculators
-- Survey & road design utilities
-- Workflow automation scripts
-- File processing tools
-- Data conversion utilities
-- Custom engineering applications
+* AutoLISP
+* Python
+* HTML5
+* CSS3
+* JavaScript
+* Java
+* Batch Script
+* PowerShell
+* Git & GitHub
+
+---
+
+## 💡 What We Build
+
+* AutoCAD Automation Tools
+* AutoCAD Civil 3D Utilities
+* AutoLISP Commands
+* HTML-Based Engineering Tools
+* Chainage Calculators
+* Geometry Calculators
+* Survey & Road Design Utilities
+* Workflow Automation Scripts
+* File Processing Tools
+* Data Conversion Utilities
+* Custom Engineering Applications
 
 ---
 
 ## 🎯 Areas of Interest
 
-- AutoCAD Automation
-- Civil 3D Automation
-- Engineering Software Development
-- CAD Productivity Tools
-- Infrastructure Design
-- GIS & Survey Utilities
-- Process Automation
-- Desktop Applications
-- Web-based Engineering Tools
+* AutoCAD Automation
+* Civil 3D Automation
+* Engineering Software Development
+* CAD Productivity Tools
+* Infrastructure Design
+* GIS & Survey Utilities
+* Process Automation
+* Desktop Applications
+* Web-Based Engineering Tools
 
 ---
 
 ## 📂 Current Projects
 
-- AutoCAD AutoLISP Tools
-- Civil 3D Productivity Scripts
-- HTML Engineering Utilities
-- Python Automation Projects
-- CAD Workflow Automation
-- Engineering Calculators
+* AutoCAD AutoLISP Tools
+* Civil 3D Productivity Scripts
+* HTML Engineering Utilities
+* Python Automation Projects
+* CAD Workflow Automation
+* Engineering Calculators
 
 ---
 
-## 📈 Goals
+## 📈 Our Goals
 
-- Build open-source tools for AutoCAD users
-- Simplify repetitive engineering tasks
-- Create easy-to-use automation utilities
-- Share useful tools with the engineering community
-- Continuously learn and improve automation techniques
-
----
-
-## ⚡ Fun Fact
-
-> "If a task is repeated more than twice, it's probably worth automating."
+* Build open-source tools for the AutoCAD community.
+* Simplify repetitive engineering tasks through automation.
+* Develop reliable, easy-to-use engineering utilities.
+* Share knowledge and useful tools with engineers worldwide.
+* Continuously learn and improve automation technologies.
 
 ---
 
-## 🤝 Connect
+## ⚡ Our Philosophy
 
-Feel free to explore my repositories, contribute, or share ideas for new automation tools.
+> **"If a task is repeated more than twice, it's probably worth automating."**
 
-⭐ If you find any project useful, consider giving it a star!
+---
+
+## 🤝 Collaborators
+
+**Jokaper & Rishi**
+
+Building practical automation tools for engineers, surveyors, and CAD professionals.
+
+We believe engineering should focus on solving problems—not repeating manual work.
+
+⭐ If you find any of our projects useful, consider giving them a star and sharing your feedback or ideas.
