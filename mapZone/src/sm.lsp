@@ -1,5 +1,13 @@
 (defun c:SM (/ zone cs mapOpt)
 
+  ;; Check if MAPCSASSIGN is available
+  (if (not (tblsearch "LAYER" "MAPCSASSIGN"))
+    (progn
+      (princ "\nMAPCSASSIGN command is not available. Please ensure you have the necessary components installed.")
+      (exit)
+    )
+  )
+  
   ;; Ask for UTM Zone
   (initget "43 44")
   (setq zone (getkword "\nEnter UTM Zone [43/44] <43>: "))
