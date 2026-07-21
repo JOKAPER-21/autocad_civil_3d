@@ -1,0 +1,20 @@
+Command: CSVKM
+
+Select CSV
+
+Pick Start Point:
+KM 0/1034.480
+Distance = 1034.480
+Create MTEXT
+
+Start Point: 0/1034.480
+KM 1/942.060
+Distance = 1942.060
+Create MTEXT
+
+Start Point: 1/942.060
+KM 2/1000.055
+Distance = 3000.055
+Create MTEXT
+
+repeat for each chainage in the CSV file
