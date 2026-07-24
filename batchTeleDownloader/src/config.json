@@ -1,0 +1,16 @@
+{
+    "api_id": 12345678,
+    "api_hash": "YOUR_API_HASH",
+
+    "extensions": [".dxf", ".dwg", ".csv", ".xlsx"],
+
+    "output_folder": "downloads",
+    "organize_by": "chat_year_month",
+
+    "start_date": "",
+    "end_date": "",
+
+    "workers": 3,
+    "retry_count": 5,
+    "skip_existing": true
+}
